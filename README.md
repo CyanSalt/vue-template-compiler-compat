@@ -93,6 +93,21 @@ For custom modifiers, you can pass them in manually to maintain compatibility be
 </template>
 ```
 
+#### Solving ESLint Errors
+
+If you are using `eslint-plugin-vue` and extend the `plugin:vue/essential`, you will need to manually turn off the following rules:
+
+```javascript
+// .eslintrc.js
+module.exports = {
+  rules: {
+    'vue/no-v-model-argument': 'off',
+  },
+}
+```
+
+Don't worry, it won't cause significant problems because another rule `vue/valid-v-model` guarantees the legality of the directive.
+
 ### `slot`
 
 This module provides compatible syntax of slots for Vue 2.6 and previous versions.
