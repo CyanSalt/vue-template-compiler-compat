@@ -12,7 +12,7 @@ npm install --dev vue-template-compiler-compat
 
 ## Usage
 
-```js
+```javascript
 const { compile } = require('vue-template-compiler')
 
 compile('your template here', {
@@ -22,7 +22,7 @@ compile('your template here', {
 
 ### Standalone usage
 
-```js
+```javascript
 const { compile } = require('vue-template-compiler')
 
 compile('your template here', {
@@ -35,7 +35,7 @@ compile('your template here', {
 
 ### For `vue-loader@<=15`
 
-```js
+```javascript
 module.exports = {
   rules: {
     test: /\.vue$/,
@@ -73,7 +73,7 @@ This module compiles the `v-model` syntax from Vue 3 to the format supported by 
 
 **It will not affect the `v-model` without argument**. Although `v-model` without argument differs in Vue 3 from Vue 2, we recommend that you use the `model` option to shim at runtime, rather than doing it during compilation.
 
-```js
+```javascript
 const Foo = {
   // This is set up to ensure consistent behavior with Vue 3
   model: {
