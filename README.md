@@ -143,3 +143,66 @@ This module works with both the `v-slot` directive and its abbreviation `#`.
 #### Why don't we use a directive modifier such as `v-slot:foo.compat` ?
 
 This is because the `vue-template-compiler` actually supports `.` symbols in slot names, which means that `v-slot:foo.compat` will operate on the `foo.compat` slot by default.
+
+### `operator`
+
+This module helps templates to support [Optional Chaining](https://github.com/tc39/proposal-optional-chaining) and [Nullish coalescing Operator](https://github.com/tc39/proposal-nullish-coalescing) proposals.
+
+Before you can use it, you need to **make sure** that `@babel/core` and the corresponding plugins (`@babel/plugin-proposal-optional-chaining` and `@babel/plugin-proposal-nullish-coalescing-operator`) have been installed in your project.
+
+```vue
+<template>
+  <div>{{ foo?.bar }}</div>
+</template>
+
+<!-- will be compiled to (for illustration only) -->
+
+<script>
+with (this) {
+  return (function () {
+    var _foo;
+    return _c('div', [_v(_s((_foo = foo) === null || _foo === void 0 ? void 0 : _foo.bar))]);
+  })()
+}
+</script>
+```
+
+```vue
+<template>
+  <div>{{ foo ?? bar }}</div>
+</template>
+
+<!-- will be compiled to (for illustration only) -->
+
+<script>
+with (this) {
+  return (function () {
+    var _foo;
+    return _c('div', [_v(_s((_foo = foo) !== null && _foo !== void 0 ? _foo : bar))]);
+  })()
+}
+</script>
+```
+
+By default, this module **does not inherit any Babel configuration** from the current project.
+
+#### Customizing Babel
+
+We implicitly expose a more basic `_babel` module to customize the behavior of transforming templates with Babel in detail.
+
+```javascript
+const babel = require('vue-template-compiler-compat/modules/_babel')
+
+const myModule = babel({
+  iife: true,
+  transformOptions: {},
+})
+```
+
+This function supports the following options:
+
+- `iife`: When specified as `true`, the code will be wrapped with [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) and passed to Babel. This is required for plugins that will generate additional variable declarations.
+
+- `transformOptions`: The option object passed to Babel. By default, Babel always recognizes the configuration file in the current project. If you want to prevent this behavior, you can specify `transformOptions.configFile` as `false`.
+
+Note that the interpolation of `vue-template-compiler` dictates that any plugins that generate **global statements cannot be supported** here, such as polyfills of `core-js`. You can use some alternatives, such as [vue-template-babel-compiler](https://github.com/JuniorTour/vue-template-babel-compiler), but we can't guarantee that they will work correctly.
