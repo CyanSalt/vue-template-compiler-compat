@@ -140,7 +140,7 @@ Setting the `slot` attribute with empty value on a `template` element with a `v-
 
 This module works with both the `v-slot` directive and its abbreviation `#`.
 
-#### Why not using a directive modifier such as `v-slot:foo.compat` ?
+#### Why not use a directive modifier such as `v-slot:foo.compat` ?
 
 This is because the `vue-template-compiler` actually supports `.` symbols in slot names, which means that `v-slot:foo.compat` will operate on the `foo.compat` slot by default.
 
@@ -183,7 +183,7 @@ with (this) {
 
 By default, this module **does not inherit any Babel configuration** from the current project.
 
-#### Why using `esbuild` instead of Babel?
+#### Why use `esbuild` instead of Babel?
 
 Simply, to reduce **configuration costs**.
 
@@ -191,10 +191,14 @@ When using Babel as a transformer, not only you should care about the preset or 
 
 Although the performance advantage of esbuild is mainly in its role as a bundler, it still outperforms Babel even as a transformer only in our tests. As a reference, the results of my tests on a huge private project are as follows (For Babel, with only Optional Chaining and Nullish coalescing Operator proposals enabled):
 
-- Without transformer: 234.464s
+- Without transformer: 328.538s
 - Using Babel as transformer: 339.413s
 - Using esbuild as transformer: 331.723s
 
 *All the above times refer to CPU time, i.e. not considering multi-core performance.*
 
 Nevertheless, I've also made the Babel-based implementation available as `vue-template-compiler-compat/modules/_syntax-babel`, which you can use or write your own module based on it.
+
+#### Why not provide it as a custom compiler?
+
+Because `vue-template-compiler` only supports compilers in object format (not module paths in string), which makes it impossible to share this configuration within threads when using the `thread-loader` with the default configuration of the Vue CLI.
