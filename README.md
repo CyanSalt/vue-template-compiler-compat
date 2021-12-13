@@ -140,15 +140,15 @@ Setting the `slot` attribute with empty value on a `template` element with a `v-
 
 This module works with both the `v-slot` directive and its abbreviation `#`.
 
-#### Why don't we use a directive modifier such as `v-slot:foo.compat` ?
+#### Why not using a directive modifier such as `v-slot:foo.compat` ?
 
 This is because the `vue-template-compiler` actually supports `.` symbols in slot names, which means that `v-slot:foo.compat` will operate on the `foo.compat` slot by default.
 
-### `operator`
+### `syntax`
 
-This module helps templates to support [Optional Chaining](https://github.com/tc39/proposal-optional-chaining) and [Nullish coalescing Operator](https://github.com/tc39/proposal-nullish-coalescing) proposals.
+This module helps templates to support the latest ECMAScript syntax, such as [Optional Chaining](https://github.com/tc39/proposal-optional-chaining) and [Nullish coalescing Operator](https://github.com/tc39/proposal-nullish-coalescing) proposals.
 
-Before you can use it, you need to **make sure** that `@babel/core` and the corresponding plugins (`@babel/plugin-proposal-optional-chaining` and `@babel/plugin-proposal-nullish-coalescing-operator`) have been installed in your project.
+Before you can use it, you need to **make sure** that [`esbuild`](https://www.npmjs.com/package/esbuild) have been installed in your project. To make it easier to manage versions, `esbuild` is not included in the dependencies by default.
 
 ```vue
 <template>
@@ -161,7 +161,7 @@ Before you can use it, you need to **make sure** that `@babel/core` and the corr
 with (this) {
   return (function () {
     var _foo;
-    return _c('div', [_v(_s((_foo = foo) === null || _foo === void 0 ? void 0 : _foo.bar))]);
+    return _c('div', [_v(_s(foo == null ? void 0 : foo.bar))]);
   })()
 }
 </script>
@@ -176,33 +176,25 @@ with (this) {
 
 <script>
 with (this) {
-  return (function () {
-    var _foo;
-    return _c('div', [_v(_s((_foo = foo) !== null && _foo !== void 0 ? _foo : bar))]);
-  })()
+  return _c("div", [_v(_s(foo != null ? foo : bar))])
 }
 </script>
 ```
 
 By default, this module **does not inherit any Babel configuration** from the current project.
 
-#### Customizing Babel
+#### Why using `esbuild` instead of Babel?
 
-We implicitly expose a more basic `_babel` module to customize the behavior of transforming templates with Babel in detail.
+Simply, to reduce **configuration costs**.
 
-```javascript
-const babel = require('vue-template-compiler-compat/modules/_babel')
+When using Babel as a transformer, not only you should care about the preset or plugin you need to use, but that configuration may become obsolete with new syntax. On the other hand, Babel's transformations are strict by default, which leads to additional variable declarations and even module imports (even if assumptions are used), which is harder for `vue-template-compiler` to handle.
 
-const myModule = babel({
-  iife: true,
-  transformOptions: {},
-})
-```
+Although the performance advantage of esbuild is mainly in its role as a bundler, it still outperforms Babel even as a transformer only in our tests. As a reference, the results of my tests on a huge private project are as follows (For Babel, with only Optional Chaining and Nullish coalescing Operator proposals enabled):
 
-This function supports the following options:
+- Without transformer: 234.464s
+- Using Babel as transformer: 339.413s
+- Using esbuild as transformer: 331.723s
 
-- `iife`: When specified as `true`, the code will be wrapped with [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) and passed to Babel. This is required for plugins that will generate additional variable declarations.
+*All the above times refer to CPU time, i.e. not considering multi-core performance.*
 
-- `transformOptions`: The option object passed to Babel. By default, Babel always recognizes the configuration file in the current project. If you want to prevent this behavior, you can specify `transformOptions.configFile` as `false`.
-
-Note that the interpolation of `vue-template-compiler` dictates that any plugins that generate **global statements cannot be supported** here, such as polyfills of `core-js`. You can use some alternatives, such as [vue-template-babel-compiler](https://github.com/JuniorTour/vue-template-babel-compiler), but we can't guarantee that they will work correctly.
+Nevertheless, I've also made the Babel-based implementation available as `vue-template-compiler-compat/modules/_syntax-babel`, which you can use or write your own module based on it.

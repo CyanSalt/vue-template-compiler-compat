@@ -70,8 +70,14 @@ function composeModules(modules) {
   return mod
 }
 
+function isStandaloneNode(el) {
+  return !el.parent // The root
+    || el.staticProcessed // The nodes that may generate `staticRenderFns` entries
+}
+
 module.exports = {
   setAttr,
   deleteAttr,
   composeModules,
+  isStandaloneNode,
 }
