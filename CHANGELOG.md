@@ -1,3 +1,10 @@
+### [0.2.1](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.2.0...v0.2.1) (2021-12-13)
+
+
+### Bug Fixes
+
+* wrap iife for esbuild ([f690a9f](https://github.com/CyanSalt/vue-template-compiler-compat/commit/f690a9f38301b64970f5db8f35fecd8ee763ebc4))
+
 ## [0.2.0](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.1.0...v0.2.0) (2021-12-13)
 
 
