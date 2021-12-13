@@ -9,7 +9,6 @@ describe('operator', () => {
         modules: [syntax],
       }),
     ).toEqual(
-      123,
       expect.objectContaining({
         render: expect.not.stringContaining('?.'),
         staticRenderFns: expect.not.arrayContaining([

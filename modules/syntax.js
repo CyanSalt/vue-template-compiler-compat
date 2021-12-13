@@ -1,14 +1,10 @@
 const esbuild = require('esbuild')
 const trimEnd = require('lodash.trimend')
-const { isStandaloneNode } = require('../utils')
+const transform = require('./syntax-transform')
 
-module.exports = {
-  transformCode(el, code) {
-    // Reduce repeated compilation
-    if (!isStandaloneNode(el)) return code
-    const result = esbuild.transformSync(code, {
-      target: 'es2019',
-    })
-    return trimEnd(result.code, ';\n')
-  },
-}
+module.exports = transform(code => {
+  const result = esbuild.transformSync(`(function(){return ${code}})`, {
+    target: 'es2019',
+  })
+  return trimEnd(result.code, ';\n')
+})

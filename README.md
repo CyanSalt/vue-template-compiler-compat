@@ -185,19 +185,17 @@ By default, this module **does not inherit any Babel configuration** from the cu
 
 #### Why use `esbuild` instead of Babel?
 
-Simply, to reduce **configuration costs**.
+Simply, to reduce **configuration costs**. When using Babel as a transformer, not only we should care about the preset or plugin you need to use, but that configuration may become obsolete with new syntax.
 
-When using Babel as a transformer, not only you should care about the preset or plugin you need to use, but that configuration may become obsolete with new syntax. On the other hand, Babel's transformations are strict by default, which leads to additional variable declarations and even module imports (even if assumptions are used), which is harder for `vue-template-compiler` to handle.
+Nevertheless, we've also made the Babel-based implementation available as `modules/syntax-babel`, which you can use or write your own module based on it. In addition, there is a lower-level `modules/syntax-transform` module that completes the syntax compilation process with the help of a custom transformer.
 
-Although the performance advantage of esbuild is mainly in its role as a bundler, it still outperforms Babel even as a transformer only in our tests. As a reference, the results of my tests on a huge private project are as follows (For Babel, with only Optional Chaining and Nullish coalescing Operator proposals enabled):
+As a reference, the results of my tests on a huge private project are as follows (For Babel, with only Optional Chaining and Nullish coalescing Operator proposals enabled):
 
-- Without transformer: 328.538s
-- Using Babel as transformer: 339.413s
-- Using esbuild as transformer: 331.723s
+- Without transformer: 328.104s
+- Using Babel as transformer: 340.078s (+3.65%)
+- Using esbuild as transformer: 338.509s (+3.17%)
 
 *All the above times refer to CPU time, i.e. not considering multi-core performance.*
-
-Nevertheless, I've also made the Babel-based implementation available as `vue-template-compiler-compat/modules/_syntax-babel`, which you can use or write your own module based on it.
 
 #### Why not provide it as a custom compiler?
 
