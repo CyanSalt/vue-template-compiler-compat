@@ -160,7 +160,6 @@ Before you can use it, you need to **make sure** that [`esbuild`](https://www.np
 <script>
 with (this) {
   return (function () {
-    var _foo;
     return _c('div', [_v(_s(foo == null ? void 0 : foo.bar))]);
   })()
 }
@@ -176,7 +175,9 @@ with (this) {
 
 <script>
 with (this) {
-  return _c("div", [_v(_s(foo != null ? foo : bar))])
+  return (function () {
+    return _c("div", [_v(_s(foo != null ? foo : bar))])
+  })()
 }
 </script>
 ```
