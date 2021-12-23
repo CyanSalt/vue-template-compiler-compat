@@ -20,18 +20,17 @@
   "author": "CyanSalt",
   "license": "ISC",
   "devDependencies": {
-    "@cyansalt/eslint-config": "^2.4.0",
+    "@cyansalt/eslint-config-preset": "^1.0.2",
     "@release-it/conventional-changelog": "^3.3.0",
     "esbuild": "^0.14.3",
-    "eslint": "^8.3.0",
-    "eslint-plugin-galaxy": "^1.8.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-unicorn": "^39.0.0",
     "jest": "^27.4.3",
     "release-it": "^14.11.8",
     "vue-template-compiler": "^2.6.14"
   },
   "dependencies": {
     "lodash.trimend": "^4.5.1"
+  },
+  "peerDependencies": {
+    "vue-template-compiler": "^2.6.14"
   }
 }
