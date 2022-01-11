@@ -3,6 +3,9 @@
   "version": "0.2.1",
   "description": "Provide compatibility for Vue 2 template compiler",
   "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --fix .",
     "release": "release-it",
@@ -12,6 +15,10 @@
     "type": "git",
     "url": "git+https://github.com/CyanSalt/vue-template-compiler-compat.git"
   },
+  "bugs": {
+    "url": "https://github.com/CyanSalt/vue-template-compiler-compat/issues"
+  },
+  "homepage": "https://github.com/CyanSalt/vue-template-compiler-compat#readme",
   "keywords": [
     "vue",
     "vue-template-compiler",
