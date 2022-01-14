@@ -148,7 +148,7 @@ This is because the `vue-template-compiler` actually supports `.` symbols in slo
 
 This module helps templates to support the latest ECMAScript syntax, such as [Optional Chaining](https://github.com/tc39/proposal-optional-chaining) and [Nullish coalescing Operator](https://github.com/tc39/proposal-nullish-coalescing) proposals.
 
-Before you can use it, you need to **make sure** that [`esbuild`](https://www.npmjs.com/package/esbuild) have been installed in your project. To make it easier to manage versions, `esbuild` is not included in the dependencies by default.
+Before you can use it, you need to **make sure** that either [`esbuild`](https://www.npmjs.com/package/esbuild) or [`Babel`](https://www.npmjs.com/package/@babel/core) have been installed in your project. To make it easier to manage versions, `esbuild` or `@babel/core` are not included in the dependencies by default.
 
 ```vue
 <template>
@@ -184,7 +184,7 @@ with (this) {
 
 By default, this module **does not inherit any Babel configuration** from the current project.
 
-#### Why use `esbuild` instead of Babel?
+#### Why `esbuild` is more recommended than Babel?
 
 Simply, to reduce **configuration costs**. When using Babel as a transformer, not only we should care about the preset or plugin you need to use, but that configuration may become obsolete with new syntax.
 

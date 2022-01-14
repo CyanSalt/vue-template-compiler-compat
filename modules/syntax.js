@@ -1,10 +1,19 @@
-const esbuild = require('esbuild')
-const trimEnd = require('lodash.trimend')
-const transform = require('./syntax-transform')
+function hasModule(mod) {
+  try {
+    require(mod)
+    return true
+    // eslint-disable-next-line unicorn/prefer-optional-catch-binding
+  } catch (err) {
+    return false
+  }
+}
 
-module.exports = transform(code => {
-  const result = esbuild.transformSync(`(function(){return ${code}})`, {
-    target: 'es2019',
-  })
-  return trimEnd(result.code, ';\n')
-})
+module.exports = (() => {
+  if (hasModule('esbuild')) {
+    return require('./syntax-esbuild')
+  }
+  if (hasModule('@babel/core')) {
+    return require('./syntax-babel')
+  }
+  return {}
+})()
