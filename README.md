@@ -17,10 +17,12 @@ const { compile } = require('vue-template-compiler')
 const { createCompatModule } = require('vue-template-compiler-compat')
 
 compile('your template here', {
-  modules: createCompatModule({
-    model: true,
-    syntax: true,
-  }),
+  modules: [
+    createCompatModule({
+      model: true,
+      syntax: true,
+    }),
+  ],
 })
 ```
 
@@ -50,10 +52,12 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           compilerOptions: {
-            modules: createCompatModule({
-              model: true,
-              syntax: true,
-            }),
+            modules: [
+              createCompatModule({
+                model: true,
+                syntax: true,
+              }),
+            ],
           },
         },
       },
