@@ -1,3 +1,15 @@
+## [0.3.0](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.2.1...v0.3.0) (2022-02-09)
+
+
+### Features
+
+* export `createCompatModule` ([21f3f6e](https://github.com/CyanSalt/vue-template-compiler-compat/commit/21f3f6eed234410ce8811e8bcf1b06d808ce0332))
+
+
+### Bug Fixes
+
+* auto check esbuild or babel by default ([de7527b](https://github.com/CyanSalt/vue-template-compiler-compat/commit/de7527b3699d2a3cc92ac4c7a9831829044ac796))
+
 ### [0.2.1](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.2.0...v0.2.1) (2021-12-13)
 
 
