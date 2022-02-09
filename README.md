@@ -14,9 +14,13 @@ npm install --dev vue-template-compiler-compat
 
 ```javascript
 const { compile } = require('vue-template-compiler')
+const { createCompatModule } = require('vue-template-compiler-compat')
 
 compile('your template here', {
-  modules: require('vue-template-compiler-compat').modules,
+  modules: createCompatModule({
+    model: true,
+    syntax: true,
+  }),
 })
 ```
 
@@ -28,7 +32,7 @@ const { compile } = require('vue-template-compiler')
 compile('your template here', {
   modules: [
     require('vue-template-compiler-compat/modules/model'),
-    require('vue-template-compiler-compat/modules/slot')
+    require('vue-template-compiler-compat/modules/syntax')
   ],
 })
 ```
@@ -36,6 +40,8 @@ compile('your template here', {
 ### For `vue-loader@<=15`
 
 ```javascript
+const { createCompatModule } = require('vue-template-compiler-compat')
+
 module.exports = {
   rules: {
     test: /\.vue$/,
@@ -44,7 +50,10 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           compilerOptions: {
-            modules: require('vue-template-compiler-compat').modules,
+            modules: createCompatModule({
+              model: true,
+              syntax: true,
+            }),
           },
         },
       },
