@@ -1,3 +1,10 @@
+### [0.3.1](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.3.0...v0.3.1) (2022-02-17)
+
+
+### Bug Fixes
+
+* esbuild iife ([c77e3ca](https://github.com/CyanSalt/vue-template-compiler-compat/commit/c77e3ca9d2ad734834a0a659a984c2ddd99778f3))
+
 ## [0.3.0](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.2.1...v0.3.0) (2022-02-09)
 
 
