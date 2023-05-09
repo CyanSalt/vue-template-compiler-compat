@@ -1,5 +1,7 @@
 # vue-template-compiler-compat
 
+[![npm](https://img.shields.io/npm/v/vue-template-compiler-compat.svg)](https://www.npmjs.com/package/vue-template-compiler-compat)
+
 Provide compatibility for Vue 2 template compiler.
 
 Note that this is **NOT** an official library of Vue.
