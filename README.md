@@ -4,7 +4,8 @@
 
 Provide compatibility for Vue 2 template compiler.
 
-Note that this is **NOT** an official library of Vue.
+> [!NOTE]
+> This is **NOT** an official library of Vue.
 
 ## Installation
 
