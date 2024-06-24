@@ -19,7 +19,9 @@ function visit(node, transform) {
     }
     if (node.children) {
       node.children.forEach(child => {
-        visit(child, transform)
+        if (child.type !== 1) {
+          visit(child, transform)
+        }
       })
     }
     // Skip error checking
