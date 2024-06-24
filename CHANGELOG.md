@@ -1,5 +1,14 @@
 
 
+## [0.4.2](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.4.1...v0.4.2) (2024-06-24)
+
+
+### Bug Fixes
+
+* attrs transformation ([7e49019](https://github.com/CyanSalt/vue-template-compiler-compat/commit/7e49019e557d73d802633e26effa7d4709e71b8b))
+* conflict between modules ([83d76fa](https://github.com/CyanSalt/vue-template-compiler-compat/commit/83d76fad127e11f5e2ed3fab1d562e0f79fc37b7))
+* dedupe ([58296e4](https://github.com/CyanSalt/vue-template-compiler-compat/commit/58296e4568719e29ae0ee90c2d046f2bb7679f13))
+
 ## [0.4.1](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.4.0...v0.4.1) (2024-06-24)
 
 
