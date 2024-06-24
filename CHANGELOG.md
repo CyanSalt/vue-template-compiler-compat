@@ -1,5 +1,12 @@
 
 
+## [0.4.1](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.4.0...v0.4.1) (2024-06-24)
+
+
+### Bug Fixes
+
+* avoid errors ([4d68a26](https://github.com/CyanSalt/vue-template-compiler-compat/commit/4d68a26b9d66fccdd300439065a838f5c93f0153))
+
 ## [0.4.0](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.3.1...v0.4.0) (2024-06-24)
 
 
