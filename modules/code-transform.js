@@ -4,7 +4,9 @@ module.exports = transform => ({
   postTransformNode(el) {
     if (el.ifConditions && isStandaloneNode(el)) {
       el.ifConditions.forEach(condition => {
-        condition.exp = transform(condition.exp)
+        if (condition.exp) {
+          condition.exp = transform(condition.exp)
+        }
       })
     }
   },
