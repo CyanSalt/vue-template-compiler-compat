@@ -23,7 +23,7 @@ compile('your template here', {
   modules: [
     createCompatModule({
       model: true,
-      syntax: true,
+      typescript: true,
     }),
   ],
 })
@@ -37,12 +37,12 @@ const { compile } = require('vue-template-compiler')
 compile('your template here', {
   modules: [
     require('vue-template-compiler-compat/modules/model'),
-    require('vue-template-compiler-compat/modules/syntax')
+    require('vue-template-compiler-compat/modules/typescript')
   ],
 })
 ```
 
-### For `vue-loader@<=15`
+### For `vue-loader`
 
 ```javascript
 const { createCompatModule } = require('vue-template-compiler-compat')
@@ -58,7 +58,7 @@ module.exports = {
             modules: [
               createCompatModule({
                 model: true,
-                syntax: true,
+                typescript: true,
               }),
             ],
           },
@@ -124,43 +124,49 @@ module.exports = {
 
 Don't worry, it won't cause significant problems because another rule `vue/valid-v-model` guarantees the legality of the directive.
 
-### `slot`
+### `typescript`
 
-This module provides compatible syntax of slots for Vue 2.6 and previous versions.
+This module helps templates to support the TypeScript syntax.
 
-Slot data generated with the `v-slot` syntax is only available via `$scopedSlots` in Vue 2. For some early component libraries (such as [`element-ui`](https://github.com/ElemeFE/element)), this behavior may not be implemented for some components. In these scenarios, we can only use the deprecated `slot` syntax, but this is not conducive to migration to Vue 3.
-
-We chose an edge case that matches the syntax of Vue 2.6 and Vue 3, compiling it to the old `slot` syntax.
+Before you can use it, you need to **make sure** that [`esbuild`](https://www.npmjs.com/package/esbuild) have been installed in your project. To make it easier to manage versions, `esbuild` or `@babel/core` are not included in the dependencies by default.
 
 ```vue
 <template>
-  <Foo>
-    <template #header slot>
-      <Bar />
-    </template>
-  </Foo>
+  <div>{{ foo!.bar }}</div>
 </template>
 
-<!-- will be compiled to -->
+<!-- will be compiled to (for illustration only) -->
 
-<template>
-  <Foo>
-    <template slot="header">
-      <Bar />
-    </template>
-  </Foo>
-</template>
+<script>
+with (this) {
+  return (function () {
+    return _c('div', [_v(_s(foo.bar))]);
+  })()
+}
+</script>
 ```
 
-Setting the `slot` attribute with empty value on a `template` element with a `v-slot` directive will be ignored in the default compilation syntax. For `v-slot` directives on non-template elements, **this module will not handle them**, since no such compatible syntax exists.
+```vue
+<template>
+  <div>{{ foo as (string | number) }}</div>
+</template>
 
-This module works with both the `v-slot` directive and its abbreviation `#`.
+<!-- will be compiled to (for illustration only) -->
 
-#### Why not use a directive modifier such as `v-slot:foo.compat` ?
+<script>
+with (this) {
+  return (function () {
+    return _c("div", [_v(_s(foo))])
+  })()
+}
+</script>
+```
 
-This is because the `vue-template-compiler` actually supports `.` symbols in slot names, which means that `v-slot:foo.compat` will operate on the `foo.compat` slot by default.
+#### Why not provide it as a custom compiler?
 
-### `syntax`
+Because `vue-template-compiler` only supports compilers in object format (not module paths in string), which makes it impossible to share this configuration within threads when using the `thread-loader` with the default configuration of the Vue CLI.
+
+### `syntax` (for `vue@<2.7` only)
 
 This module helps templates to support the latest ECMAScript syntax, such as [Optional Chaining](https://github.com/tc39/proposal-optional-chaining) and [Nullish coalescing Operator](https://github.com/tc39/proposal-nullish-coalescing) proposals.
 
@@ -214,6 +220,38 @@ As a reference, the results of my tests on a huge private project are as follows
 
 *All the above times refer to CPU time, i.e. not considering multi-core performance.*
 
-#### Why not provide it as a custom compiler?
+### `slot` (Unofficial)
 
-Because `vue-template-compiler` only supports compilers in object format (not module paths in string), which makes it impossible to share this configuration within threads when using the `thread-loader` with the default configuration of the Vue CLI.
+This module provides compatible syntax of slots for Vue 2.6 and previous versions.
+
+Slot data generated with the `v-slot` syntax is only available via `$scopedSlots` in Vue 2. For some early component libraries (such as [`element-ui`](https://github.com/ElemeFE/element)), this behavior may not be implemented for some components. In these scenarios, we can only use the deprecated `slot` syntax, but this is not conducive to migration to Vue 3.
+
+We chose an edge case that matches the syntax of Vue 2.6 and Vue 3, compiling it to the old `slot` syntax.
+
+```vue
+<template>
+  <Foo>
+    <template #header slot>
+      <Bar />
+    </template>
+  </Foo>
+</template>
+
+<!-- will be compiled to -->
+
+<template>
+  <Foo>
+    <template slot="header">
+      <Bar />
+    </template>
+  </Foo>
+</template>
+```
+
+Setting the `slot` attribute with empty value on a `template` element with a `v-slot` directive will be ignored in the default compilation syntax. For `v-slot` directives on non-template elements, **this module will not handle them**, since no such compatible syntax exists.
+
+This module works with both the `v-slot` directive and its abbreviation `#`.
+
+#### Why not use a directive modifier such as `v-slot:foo.compat` ?
+
+This is because the `vue-template-compiler` actually supports `.` symbols in slot names, which means that `v-slot:foo.compat` will operate on the `foo.compat` slot by default.

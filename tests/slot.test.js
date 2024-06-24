@@ -1,3 +1,4 @@
+const { describe, expect, it } = require('@jest/globals')
 const { compile } = require('vue-template-compiler')
 const slot = require('../modules/slot')
 
