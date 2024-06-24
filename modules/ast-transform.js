@@ -1,3 +1,7 @@
+const { setAttr } = require('../utils')
+
+const dirRE = /^v-|^@|^:|^#/
+
 function visit(node, transform) {
   if (node.type === 1) {
     if (node.ifConditions) {
@@ -10,12 +14,10 @@ function visit(node, transform) {
     if (node.for) {
       node.for = transform(node.for)
     }
-    if (node.attrs) {
-      node.attrs.forEach(attr => {
-        if (attr.dynamic !== undefined) {
-          attr.value = transform(attr.value)
-        }
-      })
+    for (const { name, value } of node.attrsList) {
+      if (dirRE.test(name)) {
+        setAttr(node, name, transform(value))
+      }
     }
     if (node.children) {
       node.children.forEach(child => {
@@ -24,15 +26,13 @@ function visit(node, transform) {
         }
       })
     }
-    // Skip error checking
-    node.attrsMap = {}
   } else if (node.type === 2) {
     node.expression = transform(node.expression)
   }
 }
 
 module.exports = transform => ({
-  postTransformNode(el) {
+  transformNode(el) {
     visit(el, transform)
   },
 })
