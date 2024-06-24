@@ -5,8 +5,8 @@ function createCompatModule(options = {}) {
   if (options.model) {
     modules.push(require('./modules/model'))
   }
-  if (options.slot) {
-    modules.push(require('./modules/slot'))
+  if (options.typescript) {
+    modules.push(require('./modules/typescript'))
   }
   if (options.syntax) {
     switch (options.syntax) {
@@ -20,6 +20,9 @@ function createCompatModule(options = {}) {
         modules.push(require('./modules/syntax'))
         break
     }
+  }
+  if (options.slot) {
+    modules.push(require('./modules/slot'))
   }
   return composeModules(modules)
 }

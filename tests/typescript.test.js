@@ -2,7 +2,7 @@ const { describe, expect, it } = require('@jest/globals')
 const { compile } = require('vue-template-compiler')
 const typescript = require('../modules/typescript')
 
-describe('operator', () => {
+describe('typescript', () => {
 
   it('should work properly', () => {
     expect(
@@ -15,6 +15,7 @@ describe('operator', () => {
         staticRenderFns: expect.not.arrayContaining([
           expect.stringContaining('!.'),
         ]),
+        errors: [],
       }),
     )
 
@@ -28,6 +29,7 @@ describe('operator', () => {
         staticRenderFns: expect.not.arrayContaining([
           expect.stringContaining('number'),
         ]),
+        errors: [],
       }),
     )
   })
