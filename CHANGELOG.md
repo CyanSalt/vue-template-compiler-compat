@@ -1,3 +1,12 @@
+
+
+## [0.4.0](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.3.1...v0.4.0) (2024-06-24)
+
+
+### Features
+
+* support `typescript` option ([5c7f86e](https://github.com/CyanSalt/vue-template-compiler-compat/commit/5c7f86ef1115dca1b76c2a6eb74b740ebac354bf))
+
 ### [0.3.1](https://github.com/CyanSalt/vue-template-compiler-compat/compare/v0.3.0...v0.3.1) (2022-02-17)
 
 
@@ -38,4 +47,3 @@
 ### Features
 
 * init ([fbbf500](https://github.com/CyanSalt/vue-template-compiler-compat/commit/fbbf5006b35465de241df9fbad4103451a22d5e6))
-
